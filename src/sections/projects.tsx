@@ -24,6 +24,7 @@ const projectsEntries: EntryListItem[] = [
 export const projectsSection = {
 	id: 'projects',
 	shortname: 'Projects',
+	fullname: 'My Projects',
 	order: 3,
 	content: <EntryList entries={projectsEntries} />
 } as Section;

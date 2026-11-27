@@ -18,6 +18,7 @@ const interestsEntries: EntryListItem[] = [
 export const interestsSection = {
 	id: 'interests',
 	shortname: 'Interests',
+	fullname: 'My Interests',
 	order: 4,
 	content: <EntryList entries={interestsEntries} />
 } as Section;

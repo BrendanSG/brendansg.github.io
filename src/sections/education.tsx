@@ -40,6 +40,7 @@ const educationEntries: EntryListItem[] = [
 export const educationSection = {
 	id: 'education',
 	shortname: 'Education',
+	fullname: 'My Education',
 	order: 2,
 	content: <EntryList entries={educationEntries} />
 } as Section;

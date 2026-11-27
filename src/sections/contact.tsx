@@ -25,6 +25,7 @@ const contactEntries: ContactEntry[] = [
 export const contactSection = {
 	id: 'contact',
 	shortname: 'Contact',
+	fullname: 'Contact me',
 	order: 5,
 	content: <>
 		<div className="contacts">
