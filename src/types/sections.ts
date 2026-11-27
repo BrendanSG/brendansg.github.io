@@ -12,3 +12,17 @@ export type Section = {
 	order: number;
 	content: React.JSX.Element;
 };
+
+/*
+ * Used in 'education', 'projects' and 'experiences' section
+ * name: Title of the item
+ * additional: Additional info (shown next to title, faculatative)
+ * time: Some text shown on the right of the item, should be used for dated items (facultative)
+ * details: A list of string, shown below the title
+ */
+export type EntryListItem = {
+	name: string,
+	additional?: string,
+	time?: string,
+	details: string[]
+}

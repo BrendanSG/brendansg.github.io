@@ -1,12 +1,7 @@
-import type { Section } from '../types/sections';
+import { EntryList } from '../components/entrylist';
+import type { Section, EntryListItem } from '../types/sections';
 
-type EducationEntry = {
-	name: string,
-	additional: string,
-	time: string,
-	details: string[]
-}
-const educationEntries: EducationEntry[] = [
+const educationEntries: EntryListItem[] = [
 	{
 		name: 'INSA Toulouse - Master\'s in Engineering',
 		additional: 'Computer Science and Networks, 4th year',
@@ -46,18 +41,5 @@ export const educationSection = {
 	id: 'education',
 	shortname: 'Education',
 	order: 2,
-	content: <>
-		<div className="entries">
-			{educationEntries.map((entry) => (<article className="entry">
-				<div className="entry-head">
-					<h3 className="txt-secondary">{entry.name}</h3>
-					<span>— {entry.additional}</span>
-					<span>{entry.time}</span>
-				</div>
-				<ul className="entry-details">
-					{entry.details.map((detail) => (<li><p>{detail}</p></li>))}
-				</ul>
-			</article>))}
-		</div>
-	</>
+	content: <EntryList entries={educationEntries} />
 } as Section;
