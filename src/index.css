@@ -12,7 +12,8 @@ body {
 	--bg: #2a2a2a;
 	--content: white;
 	--primary: #a50000;
-	--secondary: #e1dd1b;
+	--secondary: #ff6b6b;
+	--gray: #767676;
 
 	background: var(--bg);
 	color: var(--content);
@@ -24,6 +25,9 @@ h1 {
 }
 h2 {
 	font-size: 1.75rem;
+}
+h3 {
+	font-size: 1.25rem;
 }
 p {
 	font-size: 1.25rem;
@@ -39,6 +43,9 @@ a:hover {
 }
 .txt-secondary {
 	color: var(--secondary);
+}
+.txt-bold {
+	font-weight: bold;
 }
 
 /*
@@ -110,4 +117,58 @@ body > header > div#right > ul > li > a:hover {
  */
 main {
 	padding: 2rem;
+}
+
+div.entries {
+	display: flex;
+	flex-direction: column;
+	/* gap: 1rem; */
+
+	margin-top: 1rem;
+}
+div.entries > article.entry > div.entry-head {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+div.entries > article.entry > div.entry-head::before {
+	content: '■';
+	color: var(--secondary);
+	font-style: italic;
+	margin: 0 0.5rem;
+}
+div.entries > article.entry > div.entry-head > * {
+	margin: 0;
+}
+div.entries > article.entry > div.entry-head > *:first-child {
+	margin-right: 0.5rem;
+}
+div.entries > article.entry > div.entry-head > span {
+	font-size: 1.25rem;
+	color: var(--gray);
+}
+div.entries > article.entry > div.entry-head > span:nth-child(3) {
+	margin-left: auto;
+}
+div.entries > article.entry > ul.entry-details {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 0;
+	margin-left: 2rem;
+}
+div.entries > article.entry > ul.entry-details > li {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+div.entries > article.entry > ul.entry-details > li::before {
+	content: '□';
+	color: var(--content);
+	font-style: italic;
+	left: 1rem;
+	margin: 0 0.5rem;
+}
+div.entries > article.entry > ul.entry-details > li > p {
+	margin: 0;
 }
