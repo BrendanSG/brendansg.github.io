@@ -1,0 +1,19 @@
+@media screen and (max-width: 768px) {
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.5rem; }
+    h3, p { font-size: 1rem; }
+
+    body > header > div#right { display: none; }
+    
+    div.entries > article.entry > div.entry-head { grid-template-columns: 100%; }
+    div.entries > article.entry > div.entry-head > :not(:first-child) { text-align: center; }
+    div.entries > article.entry > div.entry-head > :nth-child(2) { margin-top: 0.5rem; }
+    div.entries > article.entry > div.entry-head > :nth-child(2)::before { content: none !important; }
+    div.entries > article.entry > div.entry-head > :nth-child(3) { margin-left: inherit !important; }
+
+    div.contacts {
+        flex-direction: column;
+        align-items: center;
+    }
+    section#contact p.credits { font-size: 0.75rem; }
+}

@@ -28,10 +28,7 @@ h1 {
 h2 {
 	font-size: 1.75rem;
 }
-h3 {
-	font-size: 1.25rem;
-}
-p {
+h3, p {
 	font-size: 1.25rem;
 }
 a {
@@ -136,11 +133,12 @@ div.entries {
 	/* gap: 1rem; */
 }
 div.entries > article.entry > div.entry-head {
-	display: flex;
-	flex-direction: row;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-template-rows: auto;
 	align-items: center;
 }
-div.entries > article.entry > div.entry-head::before {
+div.entries > article.entry > div.entry-head > h3::before {
 	content: '■';
 	color: var(--secondary);
 	font-style: italic;
@@ -149,12 +147,14 @@ div.entries > article.entry > div.entry-head::before {
 div.entries > article.entry > div.entry-head > * {
 	margin: 0;
 }
-div.entries > article.entry > div.entry-head > *:first-child {
-	margin-right: 0.5rem;
-}
 div.entries > article.entry > div.entry-head > span {
-	font-size: 1.25rem;
 	color: var(--gray);
+}
+div.entries > article.entry > div.entry-head > span:nth-child(2)::before {
+	content: '—';
+	color: var(--primary);
+	font-weight: bold;
+	margin: 0 0.5rem;
 }
 div.entries > article.entry > div.entry-head > span:nth-child(3) {
 	margin-left: auto;

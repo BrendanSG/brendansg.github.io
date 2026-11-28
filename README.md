@@ -42,6 +42,7 @@ brendansg.github.io/
 │   ├── App.tsx              # Main layout, header navigation, and section renderer
 │   ├── index.css            # Global styling and CSS theme
 │   └── main.tsx             # Application entry point
+│   └── mobile.css           # Mobile-specific CSS styling
 ├── .oxlintrc.json           # Oxlint configuration
 ├── .prettierrc              # Prettier code formatting rules
 ├── package.json             # Dependencies and npm scripts
