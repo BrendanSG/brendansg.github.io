@@ -1,7 +1,63 @@
+import { useEffect, useState } from 'react';
 import allSections from './sections';
 import type { Section } from './types/sections';
 
+const sortedSections: Section[] = [...allSections].sort((a, b) => a.order - b.order);
+
 function App() {
+	const [mobileMenu, setMobileMenu] = useState(false);
+	const [activeSectionId, setActiveSectionId] = useState<string>(() => {
+		if (typeof window !== 'undefined' && window.location.hash) {
+			const hash = window.location.hash.slice(1);
+			if (sortedSections.some((s) => s.id === hash)) {
+				return hash;
+			}
+		}
+		return sortedSections[0]?.id || '';
+	});
+
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50) {
+				setActiveSectionId(sortedSections[sortedSections.length - 1].id);
+				return;
+			}
+
+			const scrollPosition = window.scrollY + 150;
+			for (let i = sortedSections.length - 1; i >= 0; i--) {
+				const section = sortedSections[i];
+				const el = document.getElementById(section.id);
+				if (el && el.offsetTop <= scrollPosition) {
+					setActiveSectionId(section.id);
+					return;
+				}
+			}
+			if (sortedSections.length > 0) {
+				setActiveSectionId(sortedSections[0].id);
+			}
+		};
+
+		window.addEventListener('scroll', handleScroll, { passive: true });
+		handleScroll();
+
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, []);
+
+	const currentIndex = sortedSections.findIndex((s) => s.id === activeSectionId);
+	const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+	const currentSection = sortedSections[safeIndex];
+
+	const scrollToSection = (index: number) => {
+		if (index >= 0 && index < sortedSections.length) {
+			const target = sortedSections[index];
+			setActiveSectionId(target.id);
+			const el = document.getElementById(target.id);
+			if (el) {
+				el.scrollIntoView({ behavior: 'smooth' });
+			}
+		}
+	};
+
 	return (
 		<>
 			<header>
@@ -12,35 +68,57 @@ function App() {
 
 				<div id="right">
 					<ul>
-						{allSections
-							.sort((a, b) => a.order - b.order)
-							.map((section: Section) => (
-								<li key={section.id}>
-									<a href={`#${section.id}`}>
-										{section.shortname}
-									</a>
-								</li>
-							))}
+						{sortedSections.map((section: Section) => (
+							<li key={section.id}>
+								<a href={`#${section.id}`}>
+									{section.shortname}
+								</a>
+							</li>
+						))}
 						{/* <li><button id="toggle-language"><span id="en">ENG</span> / <span id="fr">FRA</span></button></li> */}
 					</ul>
 				</div>
 			</header>
 
+			<div className={`mobile-menu${mobileMenu === true ? ' open' : ''}`}>
+				<div className="mobile-menu-items">
+					<button
+						id="prev"
+						onClick={(e) => {
+							e.currentTarget.blur();
+							scrollToSection(safeIndex - 1);
+						}}
+						disabled={safeIndex <= 0}>◀</button>
+					<p onClick={() => scrollToSection(safeIndex)}>{currentSection?.shortname}</p>
+					<button
+						id="next"
+						onClick={(e) => {
+							e.currentTarget.blur();
+							scrollToSection(safeIndex + 1);
+						}}
+						disabled={safeIndex >= sortedSections.length - 1}>▶</button>
+				</div>
+				<button
+					id="toggle"
+					onClick={(e) => {
+						e.currentTarget.blur();
+						setMobileMenu((prev) => !prev);
+					}}>{mobileMenu ? '✖︎' : '☰'}</button>
+			</div>
+
 			<main>
-				{allSections
-					.sort((a, b) => a.order - b.order)
-					.map((section: Section) => (
-						<section id={section.id} key={section.id}>
-							<h2 className="title">
-								<span className="txt-primary">
-									({String(section.order).padStart(2, '0')})
-								</span>{' '}
-								{section.fullname ?? section.shortname}
-							</h2>
-							<hr />
-							{section.content}
-						</section>
-					))}
+				{sortedSections.map((section: Section) => (
+					<section id={section.id} key={section.id}>
+						<h2 className="title">
+							<span className="txt-primary">
+								({String(section.order).padStart(2, '0')})
+							</span>{' '}
+							{section.fullname ?? section.shortname}
+						</h2>
+						<hr />
+						{section.content}
+					</section>
+				))}
 			</main>
 		</>
 	);
