@@ -25,7 +25,10 @@ const contactEntries: ContactEntry[] = [
 export const contactSection = {
 	id: 'contact',
 	shortname: 'Contact',
-	fullname: 'Contact me',
+	fullname: {
+		EN: 'Contact me',
+		FR: 'Contactez-moi'
+	},
 	order: 5,
 	content: (
 		<>
