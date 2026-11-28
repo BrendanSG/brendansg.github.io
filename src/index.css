@@ -28,7 +28,8 @@ h1 {
 h2 {
 	font-size: 1.75rem;
 }
-h3, p {
+h3,
+p {
 	font-size: 1.25rem;
 }
 a {
@@ -103,13 +104,13 @@ body > header > div#right > ul > li > a {
 body > header > div#right > ul > li > a:hover {
 	background: color-mix(in srgb, var(--primary) 70%, white 30%);
 }
-/* body > header > div#right > ul > li > button#toggle-language {
+body > header > div#right > ul > li > button#toggle-language {
 	background: none;
 	outline: none;
 	border: none;
 	color: var(--content);
 	cursor: pointer;
-} */
+}
 
 /*
  * Content
@@ -123,7 +124,9 @@ main > section {
 main > section > hr {
 	margin-bottom: 1rem;
 }
-div.mobile-menu { display: none; }
+div.mobile-menu {
+	display: none;
+}
 
 /*
  * Entries List
@@ -196,7 +199,6 @@ div.contacts > article.contact {
 	max-width: 10dvw;
 	display: flex;
 	flex-direction: column;
-
 }
 div.contacts > article.contact > a {
 	display: flex;
@@ -207,7 +209,6 @@ div.contacts > article.contact > a {
 div.contacts > article.contact > a > img {
 	width: 100%;
 	height: auto;
-
 }
 div.contacts > article.contact > a > p {
 	white-space: nowrap;

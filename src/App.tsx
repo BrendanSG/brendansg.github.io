@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import allSections from './sections';
-import type { Section } from './types/sections';
+import { getTranslated, type Section } from './types/sections';
 
-const sortedSections: Section[] = [...allSections].sort((a, b) => a.order - b.order);
+const sortedSections: Section[] = [...allSections].sort(
+	(a, b) => a.order - b.order
+);
 
 function App() {
 	const [mobileMenu, setMobileMenu] = useState(false);
@@ -18,8 +20,13 @@ function App() {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50) {
-				setActiveSectionId(sortedSections[sortedSections.length - 1].id);
+			if (
+				window.innerHeight + window.scrollY >=
+				document.documentElement.scrollHeight - 50
+			) {
+				setActiveSectionId(
+					sortedSections[sortedSections.length - 1].id
+				);
 				return;
 			}
 
@@ -43,7 +50,9 @@ function App() {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
-	const currentIndex = sortedSections.findIndex((s) => s.id === activeSectionId);
+	const currentIndex = sortedSections.findIndex(
+		(s) => s.id === activeSectionId
+	);
 	const safeIndex = currentIndex >= 0 ? currentIndex : 0;
 	const currentSection = sortedSections[safeIndex];
 
@@ -58,6 +67,8 @@ function App() {
 		}
 	};
 
+	const [lang, setLang] = useState<'EN' | 'FR'>('EN');
+
 	return (
 		<>
 			<header>
@@ -71,11 +82,37 @@ function App() {
 						{sortedSections.map((section: Section) => (
 							<li key={section.id}>
 								<a href={`#${section.id}`}>
-									{section.shortname}
+									{getTranslated<string>(
+										section.shortname,
+										lang
+									)}
 								</a>
 							</li>
 						))}
-						{/* <li><button id="toggle-language"><span id="en">ENG</span> / <span id="fr">FRA</span></button></li> */}
+						<li>
+							<button
+								id="toggle-language"
+								onClick={() =>
+									setLang(lang == 'EN' ? 'FR' : 'EN')
+								}
+							>
+								<span
+									className={
+										lang == 'EN' ? 'txt-secondary' : ''
+									}
+								>
+									ENG
+								</span>{' '}
+								/{' '}
+								<span
+									className={
+										lang == 'FR' ? 'txt-secondary' : ''
+									}
+								>
+									FRA
+								</span>
+							</button>
+						</li>
 					</ul>
 				</div>
 			</header>
@@ -83,27 +120,46 @@ function App() {
 			<div className={`mobile-menu${mobileMenu === true ? ' open' : ''}`}>
 				<div className="mobile-menu-items">
 					<button
+						onClick={(e) => {
+							e.currentTarget.blur();
+							setLang(lang == 'EN' ? 'FR' : 'EN')
+						}}
+					>
+						{lang == 'EN' ? '🇫🇷' : '🇺🇸'}
+					</button>
+					<button
 						id="prev"
 						onClick={(e) => {
 							e.currentTarget.blur();
 							scrollToSection(safeIndex - 1);
 						}}
-						disabled={safeIndex <= 0}>◀</button>
-					<p onClick={() => scrollToSection(safeIndex)}>{currentSection?.shortname}</p>
+						disabled={safeIndex <= 0}
+					>
+						◀
+					</button>
+					<p onClick={() => scrollToSection(safeIndex)}>
+						{getTranslated<string>(currentSection?.shortname, lang)}
+					</p>
 					<button
 						id="next"
 						onClick={(e) => {
 							e.currentTarget.blur();
 							scrollToSection(safeIndex + 1);
 						}}
-						disabled={safeIndex >= sortedSections.length - 1}>▶</button>
+						disabled={safeIndex >= sortedSections.length - 1}
+					>
+						▶
+					</button>
 				</div>
 				<button
 					id="toggle"
 					onClick={(e) => {
 						e.currentTarget.blur();
 						setMobileMenu((prev) => !prev);
-					}}>{mobileMenu ? '✖︎' : '☰'}</button>
+					}}
+				>
+					{mobileMenu ? '✖︎' : '☰'}
+				</button>
 			</div>
 
 			<main>
@@ -113,10 +169,16 @@ function App() {
 							<span className="txt-primary">
 								({String(section.order).padStart(2, '0')})
 							</span>{' '}
-							{section.fullname ?? section.shortname}
+							{getTranslated<string>(
+								section.fullname ?? section.shortname,
+								lang
+							)}
 						</h2>
 						<hr />
-						{section.content}
+						{getTranslated<React.JSX.Element>(
+							section.content,
+							lang
+						)}
 					</section>
 				))}
 			</main>
